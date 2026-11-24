@@ -3,8 +3,8 @@ from scripts.ctc_core import BLANK, collapse_path, validate
 
 
 def greedy_path(emissions, alphabet):
-    # напишите ваш код здесь
-    raise NotImplementedError('STUDENT: complete greedy')
+    # При равных вероятностях max оставляет первый символ по порядку в alphabet
+    return [max(alphabet, key=row.get) for row in emissions]
 
 
 def greedy_decode(emissions, alphabet, blank=BLANK):
@@ -14,8 +14,11 @@ def greedy_decode(emissions, alphabet, blank=BLANK):
 
 
 def prefix_transitions(prefix, p_blank, p_nonblank, symbol, probability):
-    # напишите ваш код здесь
-    raise NotImplementedError('STUDENT: complete prefix')
+    extended = prefix + symbol
+    if prefix.endswith(symbol):
+        # Повтор добавляет букву, только если перед ним был blank
+        return [(prefix, p_nonblank * probability), (extended, p_blank * probability)]
+    return [(extended, (p_blank + p_nonblank) * probability)]
 
 
 def prefix_beam_decode(emissions, alphabet, beam_width, blank=BLANK):

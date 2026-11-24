@@ -24,8 +24,14 @@ def validate(emissions, alphabet, blank=BLANK):
 
 
 def merge_then_remove(path, blank):
-    # напишите ваш код здесь
-    raise NotImplementedError('STUDENT: complete collapse')
+    transcript = []
+    previous = None
+    for symbol in path:
+        if symbol != previous and symbol != blank:
+            transcript.append(symbol)
+        # Запоминаю и blank, чтобы b blank b давало bb
+        previous = symbol
+    return ''.join(transcript)
 
 
 def collapse_path(path, blank=BLANK):
@@ -48,8 +54,7 @@ def enumerate_paths(emissions, alphabet, blank=BLANK):
 
 
 def sum_matching(records, target):
-    # напишите ваш код здесь
-    raise NotImplementedError('STUDENT: complete aggregate')
+    return sum(record['probability'] for record in records if record['transcript'] == target)
 
 
 def sum_transcript_probability(records, target):
